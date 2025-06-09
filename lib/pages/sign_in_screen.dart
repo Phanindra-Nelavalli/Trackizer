@@ -2,49 +2,24 @@
 
 import 'package:flutter/material.dart';
 import 'package:trackizer/common/App_Colors.dart';
-import 'package:trackizer/pages/sign_in_screen.dart';
+import 'package:trackizer/pages/sign_up_screen.dart';
 import 'package:trackizer/widgets/custom_elevated_button.dart';
 import 'package:trackizer/widgets/custom_text_field.dart';
 
-class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({super.key});
+class SignInScreen extends StatefulWidget {
+  const SignInScreen({super.key});
 
   @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
+  State<SignInScreen> createState() => _SignInScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _SignInScreenState extends State<SignInScreen> {
   bool showPassword = false;
-  String password = '';
-
-  double _calculateStrength(String password) {
-    if (password.isEmpty) return 0.0;
-    if (password.length < 6) return 0.25;
-    if (password.length < 8) return 0.5;
-    if (!RegExp(r'[A-Z]').hasMatch(password)) return 0.5;
-    if (!RegExp(r'[0-9]').hasMatch(password)) return 0.75;
-    if (!RegExp(r'[!@#\$&*~]').hasMatch(password)) return 0.75;
-    return 1.0;
-  }
-
-  String _getStrengthLabel(double strength) {
-    if (strength <= 0.25) return "Weak";
-    if (strength <= 0.5) return "Medium";
-    if (strength <= 0.75) return "Strong";
-    return "Very Strong";
-  }
-
-  Color _getStrengthColor(double strength) {
-    if (strength <= 0.25) return Colors.red;
-    if (strength <= 0.5) return Colors.orange;
-    if (strength <= 0.75) return Colors.blue;
-    return Colors.green;
-  }
+  bool rememberMe = false;
 
   @override
   Widget build(BuildContext context) {
     final media = MediaQuery.sizeOf(context);
-    double strength = _calculateStrength(password);
 
     return Scaffold(
       backgroundColor: AppColors.gray80,
@@ -61,7 +36,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 const Spacer(),
                 Text(
-                  "Sign Up",
+                  "Sign In",
                   style: TextStyle(
                     fontSize: 32,
                     color: AppColors.secondary50,
@@ -80,13 +55,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   label: "Password",
                   prefixIcon: Icons.lock_outline,
                   textInputType: TextInputType.visiblePassword,
-                  obscureText: !showPassword,
                   color: AppColors.gray60,
-                  onChanged: (val) {
-                    setState(() {
-                      password = val;
-                    });
-                  },
+                  obscureText: !showPassword,
                   suffixIcon: IconButton(
                     splashRadius: 19,
                     onPressed: () {
@@ -104,59 +74,55 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 const SizedBox(height: 16),
                 Row(
-                  children: List.generate(4, (index) {
-                    double threshold = (index + 1) / 4;
-                    return Expanded(
-                      child: Container(
-                        margin: EdgeInsets.symmetric(horizontal: 2),
-                        height: 6,
-                        decoration: BoxDecoration(
-                          color:
-                              strength >= threshold
-                                  ? _getStrengthColor(strength)
-                                  : AppColors.gray70,
-                          borderRadius: BorderRadius.circular(3),
+                  children: [
+                    Checkbox(
+                      side: BorderSide(color: AppColors.gray60),
+                      value: rememberMe,
+                      onChanged: (value) {
+                        setState(() {
+                          rememberMe = value ?? false;
+                        });
+                      },
+                    ),
+                    Text(
+                      "Remember Me",
+                      style: TextStyle(color: AppColors.gray50, fontSize: 15),
+                    ),
+                    Spacer(),
+                    TextButton(
+                      onPressed: () {},
+                      style: TextButton.styleFrom(
+                        overlayColor: AppColors.white.withOpacity(0.2),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50),
                         ),
                       ),
-                    );
-                  }),
-                ),
-                const SizedBox(height: 4),
-                if (strength != 0)
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      "Password Strength: ${_getStrengthLabel(strength)}",
-                      style: TextStyle(color: _getStrengthColor(strength)),
+                      child: Text(
+                        "Forgot Password?",
+                        style: TextStyle(color: AppColors.gray50, fontSize: 14),
+                      ),
                     ),
-                  ),
-                const SizedBox(height: 16),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "Use 8 or more characters with a mix of letters, numbers & symbols.",
-                    style: TextStyle(color: AppColors.gray50, fontSize: 16),
-                  ),
+                  ],
                 ),
                 SizedBox(height: 40),
                 CustomElevatedButton(
-                  text: "Sign Up",
+                  text: "Sign In",
                   onPressed: () {},
                   backgroundColor: AppColors.secondary,
                   isHasShadow: true,
                 ),
                 Spacer(),
                 Text(
-                  "Do you have already an account?",
+                  "If you don't have an account yet?",
                   style: TextStyle(fontSize: 18, color: AppColors.white.withOpacity(0.7)),
                 ),
                 SizedBox(height: 20),
                 CustomElevatedButton(
-                  text: "Sign In",
+                  text: "Sign Up",
                   onPressed:
                       () => Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => SignInScreen()),
+                        MaterialPageRoute(builder: (context) => SignUpScreen()),
                       ),
                   backgroundColor: AppColors.gray70,
                   isHasShadow: true,

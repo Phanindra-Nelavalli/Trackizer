@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:trackizer/common/App_Colors.dart';
 import 'package:trackizer/pages/social_login_page.dart';
+import 'package:trackizer/pages/social_signup_screen.dart';
 import 'package:trackizer/widgets/custom_elevated_button.dart';
 
 class WelcomePage extends StatefulWidget {
@@ -33,7 +34,7 @@ class _WelcomePageState extends State<WelcomePage> {
           ),
           SafeArea(
             child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 25),
+              padding: EdgeInsets.symmetric(vertical: 30, horizontal: 25),
               child: Column(
                 children: [
                   Image.asset(
@@ -54,7 +55,7 @@ class _WelcomePageState extends State<WelcomePage> {
                         () => Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => SocialLoginPage(),
+                            builder: (context) => SocialSignupScreen(),
                           ),
                         ),
                     backgroundColor: AppColors.secondary,
@@ -63,11 +64,16 @@ class _WelcomePageState extends State<WelcomePage> {
                   SizedBox(height: 16),
                   CustomElevatedButton(
                     text: "I have an account",
-                    onPressed: () {},
+                    onPressed:
+                        () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SocialLoginPage(),
+                          ),
+                        ),
                     backgroundColor: AppColors.gray70,
                     isHasShadow: true,
                   ),
-                  SizedBox(height: 15),
                 ],
               ),
             ),

@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:trackizer/common/App_Colors.dart';
-import 'package:trackizer/pages/sign_in_screen.dart';
+import 'package:trackizer/pages/sign_up_screen.dart';
 import 'package:trackizer/widgets/custom_elevated_button.dart';
 
-class SocialLoginPage extends StatefulWidget {
-  const SocialLoginPage({super.key});
+class SocialSignupScreen extends StatefulWidget {
+  const SocialSignupScreen({super.key});
 
   @override
-  State<SocialLoginPage> createState() => _SocialLoginPageState();
+  State<SocialSignupScreen> createState() => _SocialSignupScreenState();
 }
 
-class _SocialLoginPageState extends State<SocialLoginPage> {
+class _SocialSignupScreenState extends State<SocialSignupScreen> {
   @override
   Widget build(BuildContext context) {
     final media = MediaQuery.sizeOf(context);
@@ -31,7 +31,7 @@ class _SocialLoginPageState extends State<SocialLoginPage> {
                 ),
                 Spacer(),
                 CustomElevatedButton(
-                  text: "Sign In with Apple",
+                  text: "Sign Up with Apple",
                   onPressed: () {},
                   backgroundColor: Colors.black,
                   isHasShadow: true,
@@ -39,7 +39,7 @@ class _SocialLoginPageState extends State<SocialLoginPage> {
                 ),
                 SizedBox(height: 16),
                 CustomElevatedButton(
-                  text: "Sign In with Google",
+                  text: "Sign Up with Google",
                   onPressed: () {},
                   backgroundColor: Colors.white,
                   isHasShadow: true,
@@ -48,7 +48,7 @@ class _SocialLoginPageState extends State<SocialLoginPage> {
                 ),
                 SizedBox(height: 16),
                 CustomElevatedButton(
-                  text: "Sign In with Facebook",
+                  text: "Sign Up with Facebook",
                   onPressed: () {},
                   backgroundColor: Color(0xff1771E6),
                   isHasShadow: true,
@@ -65,11 +65,11 @@ class _SocialLoginPageState extends State<SocialLoginPage> {
                 ),
                 SizedBox(height: 40),
                 CustomElevatedButton(
-                  text: "Sign In with Email",
+                  text: "Sign Up with Email",
                   onPressed:
                       () => Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => SignInScreen()),
+                        MaterialPageRoute(builder: (context) => SignUpScreen()),
                       ),
                   backgroundColor: AppColors.gray70,
                   isHasShadow: true,

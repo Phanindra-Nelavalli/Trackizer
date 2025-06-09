@@ -11,6 +11,7 @@ class CustomTextField extends StatelessWidget {
   final TextInputType? textInputType;
   final Color? textColor;
   final bool? obscureText;
+  final ValueChanged<String>? onChanged;
   final Color? color;
   const CustomTextField({
     super.key,
@@ -22,6 +23,7 @@ class CustomTextField extends StatelessWidget {
     this.color,
     this.textInputType = TextInputType.text,
     this.suffixIcon,
+    this.onChanged,
   });
 
   @override
@@ -30,6 +32,7 @@ class CustomTextField extends StatelessWidget {
       cursorColor: AppColors.white,
       obscureText: obscureText!,
       controller: controller,
+      onChanged: onChanged,
       keyboardType: textInputType,
       style: TextStyle(
         color: textColor ?? AppColors.white.withOpacity(0.8),
