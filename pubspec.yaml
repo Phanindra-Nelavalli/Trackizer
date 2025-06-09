@@ -35,11 +35,12 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   dotted_border: ^3.0.1
-  intl: ^0.20.2
+  intl: ^0.17.0
   calendar_agenda: ^0.0.2+3
   carousel_slider: ^5.1.1
   card_swiper: ^3.0.1
   flutter_launcher_icons: ^0.14.3
+  font_awesome_flutter: ^10.8.0
 
 dev_dependencies:
   flutter_test:
@@ -56,6 +57,11 @@ dev_dependencies:
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter packages.
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/logo.png"
+  
 flutter:
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
