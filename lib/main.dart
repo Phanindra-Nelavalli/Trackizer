@@ -2,7 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:trackizer/common/App_Colors.dart';
-import 'package:trackizer/pages/splash_page.dart';
+import 'package:trackizer/pages/main_tab_screen.dart';
+// import 'package:trackizer/pages/splash_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
         ),
         useMaterial3: false,
       ),
-      home: SplashPage(),
+      home: MainTabScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
