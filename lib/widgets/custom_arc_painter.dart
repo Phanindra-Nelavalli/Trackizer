@@ -3,6 +3,18 @@ import 'package:vector_math/vector_math.dart';
 import 'package:trackizer/common/App_Colors.dart';
 
 class CustomArcPainter extends CustomPainter {
+  final double width;
+  final double start;
+  final double end;
+  final double blurWidth;
+
+  CustomArcPainter({
+    super.repaint,
+    this.width = 15,
+    this.start = 0,
+    this.end = 270,
+    this.blurWidth = 6,
+  });
   @override
   void paint(Canvas canvas, Size size) {
     var rect = Rect.fromCircle(
@@ -16,20 +28,39 @@ class CustomArcPainter extends CustomPainter {
       end: Alignment.bottomCenter,
     );
 
+    var startVal = 135 + start;
+
     Paint activePaint = Paint()..shader = gradientColor.createShader(rect);
 
     activePaint.style = PaintingStyle.stroke;
-    activePaint.strokeWidth = 15;
+    activePaint.strokeWidth = width;
     activePaint.strokeCap = StrokeCap.round;
 
     Paint backgroundPaint = Paint()..shader;
     backgroundPaint.color = AppColors.gray70.withOpacity(0.7);
     backgroundPaint.style = PaintingStyle.stroke;
-    backgroundPaint.strokeWidth = 15;
+    backgroundPaint.strokeWidth = width;
     backgroundPaint.strokeCap = StrokeCap.round;
 
-    canvas.drawArc(rect, radians(135), radians(270), false, backgroundPaint);
-    canvas.drawArc(rect, radians(135), radians(200), false, activePaint);
+    Paint shadowPaint =
+        Paint()
+          ..color = AppColors.secondary.withOpacity(0.3)
+          ..strokeWidth = width + blurWidth
+          ..style = PaintingStyle.stroke
+          ..maskFilter = MaskFilter.blur(BlurStyle.normal, 5);
+
+    canvas.drawArc(
+      rect,
+      radians(startVal),
+      radians(270),
+      false,
+      backgroundPaint,
+    );
+
+    Path path = Path();
+    path.addArc(rect, radians(startVal), radians(end));
+    canvas.drawPath(path, shadowPaint);
+    canvas.drawArc(rect, radians(startVal), radians(end), false, activePaint);
   }
 
   @override

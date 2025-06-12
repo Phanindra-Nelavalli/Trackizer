@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:trackizer/common/App_Colors.dart';
 import 'package:trackizer/models/subscriptions.dart';
 
-import 'package:trackizer/pages/custom_arc_painter.dart';
+import 'package:trackizer/widgets/custom_arc_painter.dart';
 import 'package:trackizer/widgets/custom_status_button.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -35,11 +35,10 @@ class _HomeScreenState extends State<HomeScreen>
     final media = MediaQuery.sizeOf(context);
     return Scaffold(
       backgroundColor: AppColors.gray80,
-      body: Column(
-        children: [
-          _buildArcPercentage(media),
-          Expanded(child: _buildTabs(media)),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [_buildArcPercentage(media), _buildTabs(media)],
+        ),
       ),
     );
   }
@@ -59,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen>
             padding: EdgeInsets.only(bottom: media.width * 0.05),
             height: media.width * 0.68,
             width: media.width * 0.68,
-            child: CustomPaint(painter: CustomArcPainter()),
+            child: CustomPaint(painter: CustomArcPainter(end: 200)),
           ),
           Column(
             children: [
@@ -127,6 +126,24 @@ class _HomeScreenState extends State<HomeScreen>
               ),
             ),
           ),
+          Positioned(
+            top: 40,
+            right: 10,
+            child: Material(
+              color:
+                  Colors.transparent, // So the background remains transparent
+              child: IconButton(
+                onPressed: () {},
+                splashColor: AppColors.white.withOpacity(0.2),
+                splashRadius: 24,
+                icon: Icon(
+                  Icons.settings_outlined,
+                  color: AppColors.gray30,
+                  size: 24,
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -168,7 +185,8 @@ class _HomeScreenState extends State<HomeScreen>
             ),
           ),
           SizedBox(height: 6),
-          Expanded(
+          SizedBox(
+            height: media.height * 0.27,
             child: TabBarView(
               controller: _tabController,
               children: [_buildYourSubs(), _buildUpcomingSubs()],
