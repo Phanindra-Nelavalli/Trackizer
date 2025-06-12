@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:trackizer/common/App_Colors.dart';
 import 'package:trackizer/pages/home_screen.dart';
+import 'package:trackizer/pages/spending_budget_screen.dart';
 
 class MainTabScreen extends StatefulWidget {
   const MainTabScreen({super.key});
@@ -14,7 +15,7 @@ class _MainTabScreenState extends State<MainTabScreen> {
   int _currentIndex = 0;
   List<Widget> screens = [
     HomeScreen(),
-    Scaffold(),
+    SpendingBudgetScreen(),
     Scaffold(),
     Scaffold(),
     Scaffold(),
