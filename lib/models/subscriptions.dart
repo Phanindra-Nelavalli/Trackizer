@@ -62,12 +62,39 @@ class Subscriptions {
       period: SubscriptionPeriod.Monthly,
     ),
     Subscriptions(
-      title: "HBO Go",
-      imageUrl: "assets/images/hbo_logo.png",
+      title: "Netflix",
+      imageUrl: "assets/images/netflix_logo.png",
       price: 149.99,
       startDate: DateTime(2025, 1, 15),
       type: SubscriptionType.Platinum,
       period: SubscriptionPeriod.Annually,
     ),
   ];
+}
+
+extension SubscriptionUtils on Subscriptions {
+  DateTime getNextBillingDate() {
+    DateTime now = DateTime.now();
+
+    DateTime next = startDate;
+
+    while (next.isBefore(now)) {
+      switch (period) {
+        case SubscriptionPeriod.Monthly:
+          next = DateTime(next.year, next.month + 1, next.day);
+          break;
+        case SubscriptionPeriod.Annually:
+          next = DateTime(next.year + 1, next.month, next.day);
+          break;
+        case SubscriptionPeriod.Weekly:
+          next = next.add(Duration(days: 7));
+          break;
+        case SubscriptionPeriod.Custom:
+          next = next.add(customDuration!);
+          break;
+      }
+    }
+
+    return next;
+  }
 }

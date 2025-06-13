@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:trackizer/common/App_Colors.dart';
 import 'package:trackizer/models/subscriptions.dart';
-
 import 'package:trackizer/widgets/custom_arc_painter.dart';
 import 'package:trackizer/widgets/custom_status_button.dart';
 
