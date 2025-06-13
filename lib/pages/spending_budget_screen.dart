@@ -26,7 +26,7 @@ class _SpendingBudgetScreenState extends State<SpendingBudgetScreen> {
               child: Column(
                 children: [
                   SizedBox(
-                    height: 40,
+                    height: 25,
                     child: Stack(
                       alignment: Alignment.center,
                       children: [
@@ -35,7 +35,7 @@ class _SpendingBudgetScreenState extends State<SpendingBudgetScreen> {
                             "Spending & Budgets",
                             style: TextStyle(
                               color: AppColors.gray30,
-                              fontSize: 16,
+                              fontSize: 19,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -228,7 +228,7 @@ class _SpendingBudgetScreenState extends State<SpendingBudgetScreen> {
                     ),
                     child: Container(
                       width: double.infinity,
-                      height: 60,
+                      height: 70,
 
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16),

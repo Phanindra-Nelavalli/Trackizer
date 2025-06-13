@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:trackizer/common/App_Colors.dart';
+import 'package:trackizer/pages/calender_screen.dart';
 import 'package:trackizer/pages/home_screen.dart';
+import 'package:trackizer/pages/payment_cards_screen.dart';
 import 'package:trackizer/pages/spending_budget_screen.dart';
 
 class MainTabScreen extends StatefulWidget {
@@ -17,8 +19,8 @@ class _MainTabScreenState extends State<MainTabScreen> {
     HomeScreen(),
     SpendingBudgetScreen(),
     Scaffold(),
-    Scaffold(),
-    Scaffold(),
+    CalenderScreen(),
+    PaymentCardsScreen(),
   ];
   @override
   Widget build(BuildContext context) {
