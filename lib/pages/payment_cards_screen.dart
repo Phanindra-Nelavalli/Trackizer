@@ -1,7 +1,10 @@
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:trackizer/common/App_Colors.dart';
 import 'package:trackizer/models/payment_cards.dart';
+import 'package:trackizer/models/subscriptions.dart';
+import 'package:trackizer/pages/add_new_card.dart';
 
 class PaymentCardsScreen extends StatefulWidget {
   const PaymentCardsScreen({super.key});
@@ -11,6 +14,14 @@ class PaymentCardsScreen extends StatefulWidget {
 }
 
 class _PaymentCardsScreenState extends State<PaymentCardsScreen> {
+  final List<Subscriptions> subscriptions =
+      Subscriptions.dummySubs
+          .where(
+            (sub) =>
+                sub.startDate.isBefore(DateTime.now().add(Duration(days: 1))) &&
+                sub.endDate.isAfter(DateTime.now().subtract(Duration(days: 1))),
+          )
+          .toList();
   final SwiperController _swiperController = SwiperController();
   final cards = PaymentCards.dummyCards;
   @override
@@ -37,7 +48,7 @@ class _PaymentCardsScreenState extends State<PaymentCardsScreen> {
                     ),
                   ),
                   Positioned(
-                    right: -15,
+                    right: 15,
                     child: IconButton(
                       onPressed: () {},
                       splashColor: AppColors.white.withOpacity(0.2),
@@ -53,14 +64,99 @@ class _PaymentCardsScreenState extends State<PaymentCardsScreen> {
               ),
             ),
             SizedBox(height: 40),
-            cards.isNotEmpty ? _buildSwiper() : _buildNoCardsDisplay(),
-            SizedBox(height: 80),
+            cards.isNotEmpty
+                ? Column(
+                  children: [
+                    _buildSwiper(),
+                    SizedBox(height: 40),
+                    Text(
+                      "Subscriptions",
+                      style: TextStyle(
+                        color: AppColors.white,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 24,
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: List.generate(
+                        subscriptions.length,
+                        (index) => Container(
+                          height: 40,
+                          width: 40,
+                          margin: EdgeInsets.only(right: 8),
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage(subscriptions[index].imageUrl),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+                : _buildNoCardsDisplay(),
+            SizedBox(height: 40),
             Expanded(
               child: Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
                   color: AppColors.gray70.withOpacity(0.8),
+                ),
+                child: Center(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 40),
+                    child: InkWell(
+                      splashColor:AppColors.white.withOpacity(0.7),
+                      onTap:
+                          () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AddNewCard(),
+                            ),
+                          ),
+                      child: DottedBorder(
+                        options: RoundedRectDottedBorderOptions(
+                          dashPattern: [5, 4],
+                          strokeWidth: 2,
+                          radius: Radius.circular(12),
+                          color: AppColors.gray60.withOpacity(0.7),
+                        ),
+                        child: Container(
+                          width: double.infinity,
+                          height: 70,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                            color: AppColors.gray70.withOpacity(0.25),
+                          ),
+                          child: Center(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Add new card",
+                                  style: TextStyle(
+                                    color: AppColors.gray30,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                SizedBox(width: 8),
+                                Icon(
+                                  Icons.add_circle_outline,
+                                  color: AppColors.gray30,
+                                  size: 18,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -72,7 +168,7 @@ class _PaymentCardsScreenState extends State<PaymentCardsScreen> {
 
   Widget _buildNoCardsDisplay() {
     return SizedBox(
-      height: 350,
+      height: 450,
       width: double.infinity,
       child: Center(
         child: Column(
