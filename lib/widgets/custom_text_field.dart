@@ -32,6 +32,7 @@ class CustomTextField extends StatelessWidget {
       cursorColor: AppColors.white,
       obscureText: obscureText!,
       controller: controller,
+
       onChanged: onChanged,
       keyboardType: textInputType,
       style: TextStyle(
@@ -40,7 +41,7 @@ class CustomTextField extends StatelessWidget {
       ),
       decoration: InputDecoration(
         labelText: label,
-        contentPadding: EdgeInsets.symmetric(vertical: 25),
+        contentPadding: EdgeInsets.symmetric(vertical: 25, horizontal: 20),
         labelStyle: TextStyle(color: color ?? AppColors.white.withOpacity(0.8)),
         filled: true,
         fillColor: Colors.transparent,

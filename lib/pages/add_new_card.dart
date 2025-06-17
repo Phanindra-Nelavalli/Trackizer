@@ -25,9 +25,9 @@ class _AddNewCardState extends State<AddNewCard> {
         backgroundColor: AppColors.gray80,
         shadowColor: null,
         elevation: 0,
-        title: Text("Add New Card"),
+        title: Text("Payment Cards"),
         centerTitle: true,
-        titleTextStyle: TextStyle(fontWeight: FontWeight.w700, fontSize: 21),
+        titleTextStyle: const TextStyle(fontSize: 16),
       ),
       backgroundColor: AppColors.gray80,
       body: SafeArea(
@@ -40,9 +40,18 @@ class _AddNewCardState extends State<AddNewCard> {
                 child: Column(
                   children: [
                     Icon(
-                      Icons.wallet_rounded,
+                      Icons.credit_card,
                       size: 82,
-                      color: AppColors.white.withOpacity(0.7),
+                      color: AppColors.white,
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      "Add New Card",
+                      style: TextStyle(
+                        color: AppColors.white,
+                        fontSize: 32,
+                        fontWeight: FontWeight.w800,
+                      ),
                     ),
                     SizedBox(height: 30),
                     _buildField(
