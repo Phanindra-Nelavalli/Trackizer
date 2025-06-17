@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:trackizer/common/App_Colors.dart';
+import 'package:trackizer/pages/add_new_subscription.dart';
 import 'package:trackizer/pages/calender_screen.dart';
 import 'package:trackizer/pages/home_screen.dart';
 import 'package:trackizer/pages/payment_cards_screen.dart';
@@ -18,7 +19,7 @@ class _MainTabScreenState extends State<MainTabScreen> {
   List<Widget> screens = [
     HomeScreen(),
     SpendingBudgetScreen(),
-    Scaffold(),
+
     CalenderScreen(),
     PaymentCardsScreen(),
   ];
@@ -27,11 +28,11 @@ class _MainTabScreenState extends State<MainTabScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          setState(() {
-            _currentIndex = 2;
-          });
-        },
+        onPressed:
+            () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => AddNewSubscription()),
+            ),
         shape: CircleBorder(),
         backgroundColor: AppColors.secondary,
         child: Icon(Icons.add, size: 30),
@@ -86,14 +87,14 @@ class _MainTabScreenState extends State<MainTabScreen> {
               IconButton(
                 onPressed: () {
                   setState(() {
-                    _currentIndex = 3;
+                    _currentIndex = 2;
                   });
                 },
                 icon: Icon(
                   CupertinoIcons.calendar,
                   size: 25,
                   color:
-                      _currentIndex == 3
+                      _currentIndex == 2
                           ? AppColors.white
                           : Colors.grey.shade400,
                 ),
@@ -101,14 +102,14 @@ class _MainTabScreenState extends State<MainTabScreen> {
               IconButton(
                 onPressed: () {
                   setState(() {
-                    _currentIndex = 4;
+                    _currentIndex = 3;
                   });
                 },
                 icon: Icon(
                   Icons.wallet_rounded,
                   size: 25,
                   color:
-                      _currentIndex == 4
+                      _currentIndex == 3
                           ? AppColors.white
                           : Colors.grey.shade400,
                 ),

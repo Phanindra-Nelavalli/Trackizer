@@ -5,43 +5,54 @@ enum SubscriptionPeriod { Monthly, Annually, Weekly, Custom }
 class Subscriptions {
   final String title;
   final String imageUrl;
+  final String? description;
   final double price;
   final DateTime startDate;
   final DateTime endDate;
   final SubscriptionType type;
   final SubscriptionPeriod period;
-  final Duration? customDuration;
+  final DateTime? customDate;
 
   Subscriptions({
     required this.title,
     required this.imageUrl,
+    this.description,
     required this.price,
     required this.startDate,
     required this.type,
     this.period = SubscriptionPeriod.Monthly,
-    this.customDuration,
-  }) : endDate = _calculateEndDate(startDate, period, customDuration);
+    this.customDate,
+  }) : endDate = calculateEndDate(startDate, period, customDate);
 
-  static DateTime _calculateEndDate(
+  static DateTime calculateEndDate(
     DateTime startDate,
     SubscriptionPeriod period,
-    Duration? customDuration,
+    DateTime? customDate,
   ) {
     switch (period) {
       case SubscriptionPeriod.Monthly:
-        return DateTime(startDate.year, startDate.month + 1, startDate.day);
+        return _addMonths(startDate, 1);
       case SubscriptionPeriod.Annually:
         return DateTime(startDate.year + 1, startDate.month, startDate.day);
       case SubscriptionPeriod.Weekly:
         return startDate.add(const Duration(days: 7));
       case SubscriptionPeriod.Custom:
-        if (customDuration == null) {
+        if (customDate == null) {
           throw ArgumentError(
-            'customDuration must be provided when SubscriptionPeriod is Custom',
+            'customDate must be provided when period is Custom',
           );
         }
-        return startDate.add(customDuration);
+        return customDate;
     }
+  }
+
+  static DateTime _addMonths(DateTime date, int monthsToAdd) {
+    int year = date.year + ((date.month + monthsToAdd - 1) ~/ 12);
+    int month = (date.month + monthsToAdd - 1) % 12 + 1;
+    int day = date.day;
+
+    int lastDayOfMonth = DateTime(year, month + 1, 0).day;
+    return DateTime(year, month, day > lastDayOfMonth ? lastDayOfMonth : day);
   }
 
   static final List<Subscriptions> dummySubs = [
@@ -49,6 +60,7 @@ class Subscriptions {
       title: "Spotify",
       imageUrl: "assets/images/spotify_logo.png",
       price: 5.99,
+      description: "Music App",
       startDate: DateTime(2025, 6, 1),
       type: SubscriptionType.Gold,
       period: SubscriptionPeriod.Monthly,
@@ -57,6 +69,7 @@ class Subscriptions {
       title: "Youtube Premium",
       imageUrl: "assets/images/youtube_logo.png",
       price: 18.99,
+      description: "Streaming App",
       startDate: DateTime(2025, 5, 20),
       type: SubscriptionType.Gold,
       period: SubscriptionPeriod.Monthly,
@@ -65,6 +78,7 @@ class Subscriptions {
       title: "Netflix",
       imageUrl: "assets/images/netflix_logo.png",
       price: 149.99,
+      description: "Streaming App",
       startDate: DateTime(2025, 1, 15),
       type: SubscriptionType.Platinum,
       period: SubscriptionPeriod.Annually,
@@ -75,23 +89,21 @@ class Subscriptions {
 extension SubscriptionUtils on Subscriptions {
   DateTime getNextBillingDate() {
     DateTime now = DateTime.now();
-
     DateTime next = startDate;
 
     while (next.isBefore(now)) {
       switch (period) {
         case SubscriptionPeriod.Monthly:
-          next = DateTime(next.year, next.month + 1, next.day);
+          next = Subscriptions._addMonths(next, 1);
           break;
         case SubscriptionPeriod.Annually:
           next = DateTime(next.year + 1, next.month, next.day);
           break;
         case SubscriptionPeriod.Weekly:
-          next = next.add(Duration(days: 7));
+          next = next.add(const Duration(days: 7));
           break;
         case SubscriptionPeriod.Custom:
-          next = next.add(customDuration!);
-          break;
+          return customDate!;
       }
     }
 
