@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:trackizer/common/App_Colors.dart';
 import 'package:trackizer/models/subscriptions.dart';
+import 'package:trackizer/pages/subscription_info.dart';
 import 'package:trackizer/widgets/custom_arc_painter.dart';
 import 'package:trackizer/widgets/custom_status_button.dart';
 
@@ -200,32 +201,41 @@ class _HomeScreenState extends State<HomeScreen>
     return ListView.separated(
       itemBuilder: (context, index) {
         final sub = subs[index];
-        return Container(
-          padding: EdgeInsets.all(12),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-            color: AppColors.gray70.withOpacity(0.5),
-            border: Border.all(
-              color: AppColors.gray60.withOpacity(0.4),
-              width: 2,
-            ),
-          ),
-          child: ListTile(
-            leading: Image.asset(sub.imageUrl, height: 50, width: 50),
-            title: Text(
-              sub.title,
-              style: TextStyle(
-                color: AppColors.white,
-                fontWeight: FontWeight.w600,
-                fontSize: 17,
+        return InkWell(
+          onTap:
+              () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SubscriptionInfo(subscriptions: sub),
+                ),
+              ),
+          child: Container(
+            padding: EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              color: AppColors.gray70.withOpacity(0.5),
+              border: Border.all(
+                color: AppColors.gray60.withOpacity(0.4),
+                width: 2,
               ),
             ),
-            trailing: Text(
-              "\$${sub.price}",
-              style: TextStyle(
-                color: AppColors.white,
-                fontWeight: FontWeight.w700,
-                fontSize: 17,
+            child: ListTile(
+              leading: Image.asset(sub.imageUrl, height: 50, width: 50),
+              title: Text(
+                sub.title,
+                style: TextStyle(
+                  color: AppColors.white,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 17,
+                ),
+              ),
+              trailing: Text(
+                "\$${sub.price}",
+                style: TextStyle(
+                  color: AppColors.white,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 17,
+                ),
               ),
             ),
           ),

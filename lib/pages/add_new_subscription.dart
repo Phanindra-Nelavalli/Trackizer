@@ -22,6 +22,7 @@ class _AddNewSubscriptionState extends State<AddNewSubscription> {
   ];
 
   double amountVal = 0.09;
+  int _selectedIndex = 0;
   final TextEditingController _amountController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
 
@@ -121,6 +122,10 @@ class _AddNewSubscriptionState extends State<AddNewSubscription> {
                             viewportFraction: 0.61,
                             enlargeFactor: 0.4,
                             enlargeStrategy: CenterPageEnlargeStrategy.zoom,
+                            onPageChanged:
+                                (index, reason) => setState(() {
+                                  _selectedIndex = index;
+                                }),
                           ),
                         ),
                       ),
@@ -268,8 +273,10 @@ class _AddNewSubscriptionState extends State<AddNewSubscription> {
                             () => showDialog(
                               context: context,
                               builder:
-                                  (context) =>
-                                       SubscriptionDetailsScreen(),
+                                  (context) => SubscriptionDetailsScreen(
+                                    title: subArr[_selectedIndex]["name"],
+                                    imageUrl: subArr[_selectedIndex]["icon"],
+                                  ),
                             ),
                         backgroundColor: AppColors.secondary,
                         isHasShadow: true,

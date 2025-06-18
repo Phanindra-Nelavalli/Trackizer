@@ -1,6 +1,19 @@
 enum SubscriptionType { Classic, Silver, Gold, Platinum }
 
-enum SubscriptionPeriod { Monthly, Annually, Weekly, Custom }
+enum SubscriptionPeriod { Monthly, Annually, Quarterly, Weekly, Custom }
+
+enum SubscriptionCategory {
+  Entertainment,
+  Productivity,
+  Education,
+  CloudStorage,
+  Finance,
+  HealthFitness,
+  Gaming,
+  NewsMedia,
+  Utilities,
+  Other,
+}
 
 class Subscriptions {
   final String title;
@@ -11,6 +24,7 @@ class Subscriptions {
   final DateTime endDate;
   final SubscriptionType type;
   final SubscriptionPeriod period;
+  final SubscriptionCategory category;
   final DateTime? customDate;
 
   Subscriptions({
@@ -20,6 +34,7 @@ class Subscriptions {
     required this.price,
     required this.startDate,
     required this.type,
+    required this.category,
     this.period = SubscriptionPeriod.Monthly,
     this.customDate,
   }) : endDate = calculateEndDate(startDate, period, customDate);
@@ -32,6 +47,8 @@ class Subscriptions {
     switch (period) {
       case SubscriptionPeriod.Monthly:
         return _addMonths(startDate, 1);
+      case SubscriptionPeriod.Quarterly:
+        return _addMonths(startDate, 3);
       case SubscriptionPeriod.Annually:
         return DateTime(startDate.year + 1, startDate.month, startDate.day);
       case SubscriptionPeriod.Weekly:
@@ -63,15 +80,17 @@ class Subscriptions {
       description: "Music App",
       startDate: DateTime(2025, 6, 1),
       type: SubscriptionType.Gold,
+      category: SubscriptionCategory.Entertainment,
       period: SubscriptionPeriod.Monthly,
     ),
     Subscriptions(
-      title: "Youtube Premium",
+      title: "YouTube Premium",
       imageUrl: "assets/images/youtube_logo.png",
       price: 18.99,
-      description: "Streaming App",
+      description: "Ad-free streaming",
       startDate: DateTime(2025, 5, 20),
       type: SubscriptionType.Gold,
+      category: SubscriptionCategory.Entertainment,
       period: SubscriptionPeriod.Monthly,
     ),
     Subscriptions(
@@ -81,6 +100,7 @@ class Subscriptions {
       description: "Streaming App",
       startDate: DateTime(2025, 1, 15),
       type: SubscriptionType.Platinum,
+      category: SubscriptionCategory.Entertainment,
       period: SubscriptionPeriod.Annually,
     ),
   ];
@@ -95,6 +115,9 @@ extension SubscriptionUtils on Subscriptions {
       switch (period) {
         case SubscriptionPeriod.Monthly:
           next = Subscriptions._addMonths(next, 1);
+          break;
+        case SubscriptionPeriod.Quarterly:
+          next = Subscriptions._addMonths(next, 3);
           break;
         case SubscriptionPeriod.Annually:
           next = DateTime(next.year + 1, next.month, next.day);
