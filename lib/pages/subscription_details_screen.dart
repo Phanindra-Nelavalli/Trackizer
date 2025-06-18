@@ -3,7 +3,13 @@ import 'package:trackizer/common/App_Colors.dart';
 import 'package:trackizer/models/subscriptions.dart';
 
 class SubscriptionDetailsScreen extends StatefulWidget {
-  const SubscriptionDetailsScreen({super.key});
+  final String title;
+  final String imageUrl;
+  const SubscriptionDetailsScreen({
+    super.key,
+    required this.title,
+    required this.imageUrl,
+  });
 
   @override
   State<SubscriptionDetailsScreen> createState() =>
@@ -144,6 +150,26 @@ class _SubscriptionDetailsScreenState extends State<SubscriptionDetailsScreen> {
                     icon: Icon(Icons.close, color: AppColors.white, size: 24),
                   ),
                 ],
+              ),
+              SizedBox(height: 20),
+              Container(
+                height: 100,
+                width: 100,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(widget.imageUrl),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              SizedBox(height: 10),
+              Text(
+                widget.title,
+                style: TextStyle(
+                  color: AppColors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w800,
+                ),
               ),
               SizedBox(height: 20),
               _buildField(

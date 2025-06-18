@@ -7,6 +7,7 @@ class CustomElevatedButton extends StatelessWidget {
   final Color? foregroundColor;
   final bool? isHasShadow;
   final IconData? icon;
+  final double? elevation;
   final double? iconSize;
   const CustomElevatedButton({
     super.key,
@@ -14,6 +15,7 @@ class CustomElevatedButton extends StatelessWidget {
     required this.onPressed,
     required this.backgroundColor,
     this.foregroundColor,
+    this.elevation = 4,
     this.icon,
     this.isHasShadow = false,
     this.iconSize,
@@ -33,7 +35,7 @@ class CustomElevatedButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(50),
           ),
           shadowColor: isHasShadow! ? backgroundColor : null,
-          elevation: 4,
+          elevation: elevation,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
